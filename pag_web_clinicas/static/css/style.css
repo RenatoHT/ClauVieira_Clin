@@ -1,0 +1,242 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: #f8f5ff;
+    color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    background-color: #d8c4f2;
+}
+
+.navbar a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #4b2e83;
+    font-weight: 500;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #e9ddff, #f8f5ff);
+}
+
+.hero h1 {
+    font-size: 45px;
+    color: #4b2e83;
+}
+
+.hero p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+/* BOTÃO */
+.btn {
+    display: inline-block;
+    background-color: #a78bfa;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #7c3aed;
+}
+
+/* SERVIÇOS */
+.servicos {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* CTA */
+.cta {
+    text-align: center;
+    padding: 60px;
+    background-color: #ede9fe;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #d8c4f2;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+/* SOBRE */
+.sobre {
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sobre-conteudo h2 {
+    color: #4b2e83;
+    margin-top: 30px;
+}
+
+.sobre-conteudo p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #555;
+}
+
+/* FOTO PROFISSIONAL */
+.foto-profissional {
+    display: block;
+    width: 300px;
+    height: 400px;
+    object-fit: cover;       /* recorta sem distorcer */
+    object-position: top;
+    border-radius: 12%;      /* formato circular */
+    margin: 0 auto 30px;     /* centralizada */
+    border: 4px solid #a78bfa;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+/* SERVIÇOS - PÁGINA */
+.servicos-pagina {
+    padding: 60px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.servicos-intro {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #555;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.servicos-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.servico-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 420px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.servico-card h2 {
+    color: #4b2e83;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.servico-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.servico-card ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ede9fe;
+    color: #444;
+    font-size: 16px;
+}
+
+.servico-card ul li:last-child {
+    border-bottom: none;
+}
+
+.servicos-cta {
+    text-align: center;
+    margin-top: 50px;
+    padding: 40px;
+    background-color: #ede9fe;
+    border-radius: 16px;
+}
+
+.servicos-cta p {
+    font-size: 18px;
+    color: #4b2e83;
+    margin-bottom: 20px;
+}
+
+/* CONTATO */
+.contato-pagina {
+    padding: 60px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contato-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.contato-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 420px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.contato-card h2 {
+    color: #4b2e83;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.contato-card p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.contato-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contato-card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ede9fe;
+    color: #444;
+    font-size: 16px;
+}
+
+.contato-card ul li:last-child {
+    border-bottom: none;
+}
