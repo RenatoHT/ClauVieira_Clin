@@ -9,4 +9,6 @@ urlpatterns = [
     path("sobre/", views.sobre, name="sobre"),
     path("servicos/", views.servicos, name="servicos"),
     path("contato/", views.contato, name="contato"),
+    path("form/", views.form_anam, name="formuário"),##Form Anamnese
+    path("gerar_pdf/", views.gerar_pdf, name="pdf"), ##PDF
 ]

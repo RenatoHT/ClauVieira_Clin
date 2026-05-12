@@ -1,0 +1,329 @@
+{% extends 'pag_web_clinicas/base.html' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% block title %} Cĺinica Estética {% endblock %}
+
+{% block content %}
+Cadastro
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <h3>Dados Pessoais</h3>
+    
+    {% for field in form %}
+        {% if field.name in personal_fields %}
+            <p>{{ field.label }}<br>{{ field }}</p>
+            {% for error in field.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+
+    <h3>Anamnese</h3>
+
+    {% for bool_field, str_field in fields %}
+
+    <div class="pair">
+
+        <div class="left">
+            {{ bool_field }}
+            <label for="{{ bool_field.id_for_label }}">
+                {{ bool_field.label }}
+            </label>
+
+            
+            {% for error in bool_field.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+
+        </div>
+
+        <div class="right">
+            {{ str_field }}
+
+            {% for error in str_field.errors %}
+            <div class="error">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    {{form.infoadd.label}}{{form.infoadd}}
+
+{% block extra_javascript %}{% endblock %}
+<div class="field assinatura-field">
+    {{ form.assinatura }}
+    {{form.media}}
+
+
+    {% for error in form.assinatura.errors %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    <div class="label">
+        <label for="{{ form.assinatura.id_for_label }}">
+            {{ form.assinatura.label }}
+        </label>
+    </div>
+</div>
+
+<script>
+window.addEventListener("load", function () {
+
+    const resetButton = document.querySelector(
+        '.jsign-wrapper .btn'
+    );
+
+    if (resetButton) {
+        resetButton.value = "Limpar Assinatura";
+    }
+
+});
+</script>
+
+
+
+<script>
+document.getElementById('id_data_nasc').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, ''); // remove non-digits
+
+    if (value.length > 2) {
+        value = value.slice(0,2) + '/' + value.slice(2);
+    }
+    if (value.length > 5) {
+        value = value.slice(0,5) + '/' + value.slice(5,9);
+    }
+
+    e.target.value = value;
+});
+</script>
+
+<!-- Terms and Conditions Section -->
+<div class="terms-container">
+
+    <h3>Termos e Condições</h3>
+
+    <div id="termsBox" class="terms-box">
+
+        <p><strong>1. INFORMAÇÕES GENÉRICAS</strong></p>
+        <p>
+            A Toxina Botulínica “A” basicamente inibe a liberação exocitótica
+            da acetilcolina nos terminais motores levando a uma diminuição da
+            contração muscular.
+        </p>
+
+        <p><strong>2. INDICAÇÕES</strong></p>
+        <p>
+            Esse procedimento é indicado para prevenção de rugas estáticas.
+        </p>
+        <p>
+            Esse procedimento não é indicado em caso de reação alérgica já
+            conhecida a qualquer um dos componentes.
+        </p>
+
+        <p><strong>3. MODO DE AÇÃO</strong></p>
+        <p>
+            A Toxina Botulínica causa uma semiparalisação da musculatura e,
+            portanto, NÃO preenche rugas. Esta semiparalisação é temporária
+            e pode durar em média cinco meses.
+        </p>
+
+        <p>
+            O efeito esperado demora entre 3 e 7 dias para acontecer.
+            É recomendável um intervalo de 6 meses entre as aplicações para
+            que o paciente não crie resistência à toxina e possa continuar
+            usufruindo dos resultados.
+        </p>
+
+        <p><strong>4. MODO DE APLICAÇÃO E APARÊNCIA</strong></p>
+        <p>
+            A toxina Botulínica vem em frasco estéril em formato de pó
+            liofilizado, devendo ser diluída com soro fisiológico estéril e
+            conservada em temperatura baixa.
+        </p>
+
+        <p>
+            Sua aplicação é realizada através de agulha com pequenas punturas
+            em vários pontos da face, de acordo com a análise do profissional
+            e queixa do cliente.
+        </p>
+
+        <p><strong>5. CUIDADOS NECESSÁRIOS</strong></p>
+        <p>
+            Evite tocar ou massagear a região tratada nas 4 horas seguintes
+            do procedimento, inclusive não abaixe a cabeça ou se deite durante
+            esse período, evitando que a toxina migre para áreas indesejadas.
+        </p>
+
+        <p>
+            Depois desse período a área poderá ser lavada suavemente com água
+            e sabonete próprio para o rosto.
+        </p>
+
+        <p><strong>6. EFEITOS COLATERAIS E RISCOS</strong></p>
+        <p>
+            Logo após a aplicação pode ocorrer vermelhidão, edema,
+            sensibilidade e coceira.
+        </p>
+
+        <p>
+            Fazer compressa fria na região afetada. NÃO use gelo diretamente
+            no local. Trata-se de reação normal e pode durar de 1 a 3 dias.
+            Caso persista, comunicar o profissional.
+        </p>
+
+        <p><strong>7. DURAÇÃO DO EFEITO</strong></p>
+        <p>
+            De uma maneira geral a durabilidade varia de organismo para
+            organismo, podendo ser de 4 a 6 meses.
+        </p>
+
+        <p>
+            O pagamento contempla uma aplicação e eventual reaplicação para
+            retoques em até 15 dias.
+        </p>
+
+        <p><strong>8. RETORNO</strong></p>
+        <p>
+            Para manter a correção será necessário repetir o procedimento com
+            o tempo. É responsabilidade do paciente o agendamento de retornos.
+        </p>
+
+        <p><strong>9. RESULTADO</strong></p>
+        <p>
+            Fatores individuais influenciam no resultado. Pequena parte da
+            população pode apresentar resistência à toxina botulínica.
+        </p>
+
+        <p>
+            Cada organismo reage de forma única. Este termo não esgota todos
+            os riscos possíveis.
+        </p>
+
+        <hr>
+
+        <p>
+            <strong>
+                DECLARO QUE LI E ENTENDI
+            </strong>
+            as informações acima, e que antes de aceitar o procedimento,
+            tive a oportunidade suficiente para discutir e questionar sobre
+            o mesmo, esclarecendo minhas dúvidas.
+        </p>
+
+        <p>
+            Comprometo-me a seguir, rigorosamente, todos os cuidados prescritos.
+            Tenho consciência de que o bom resultado final também depende de mim.
+        </p>
+
+        <p>
+            Declaro ciência de que a lista de riscos e complicações deste formulário
+            pode não incluir todos os riscos conhecidos ou possíveis de acontecer
+            neste procedimento, mas é a lista de riscos mais comuns e severos.
+        </p>
+
+        <p>
+            Estou ciente ser de minha responsabilidade a leitura integral deste
+            Termo, preparado com esmero e que me foi entregue em tempo hábil
+            para que pudesse lê-lo e, caso ainda restasse alguma dúvida,
+            poder dirimi-la com o profissional.
+        </p>
+
+        <p>
+            Autorizo também que administre tal tratamento em mim, concordando
+            inclusive em não responsabilizar, ou fazer quaisquer exigências
+            ou processá-lo por danos, injúrias ou complicações que porventura
+            ocorram fora de seu controle, os quais possam alterar os resultados
+            previstos.
+        </p>
+
+        <p>
+            Certifico que este formulário me foi explicado, que li e entendi
+            o seu conteúdo.
+        </p>
+
+        <p>
+            Forneci, sem nada omitir, para o preenchimento da ficha,
+            todas as informações solicitadas.
+        </p>
+
+        <p>
+            Assim sendo, firmo a presente declaração e autorização.
+        </p>
+
+    </div>
+
+    <div class="terms-check">
+        <input type="checkbox"
+               id="termsCheckbox"
+               name="terms_accepted"
+               disabled
+               required>
+
+        <label for="termsCheckbox">
+            Li e aceito os Termos e Condições
+        </label>
+    </div>
+
+</div>
+
+<style>
+.terms-container {
+    margin-top: 30px;
+}
+
+.terms-box {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.terms-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.terms-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const termsBox = document.getElementById('termsBox');
+    const checkbox = document.getElementById('termsCheckbox');
+
+    termsBox.addEventListener('scroll', function () {
+
+        const reachedBottom =
+            termsBox.scrollTop + termsBox.clientHeight >=
+            termsBox.scrollHeight - 5;
+
+        if (reachedBottom) {
+            checkbox.disabled = false;
+        }
+
+    });
+
+});
+</script>
+
+
+<button type="submit">Finalizar</button>
+
+</form>
+{% endblock %}

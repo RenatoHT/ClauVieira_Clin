@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<style>
+@page {
+    size: A4;
+    margin: 40mm 20mm 20mm 20mm;
+    
+    @top-center {
+        content: element(header);
+    }
+}
+
+
+.header {
+    position: running(header);
+    height: 30mm;
+    width: 100%;
+}
+
+.header img {
+    width: 100%;
+    height: 30mm;
+    object-fit: cover;
+    display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0 auto;
+  padding-top: 20mm;
+  font-family: DejaVu Sans, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* TEXT */
+p {
+  text-align: justify;
+  margin: 6px 0;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* INLINE FIELDS (KEEP ORIGINAL STYLE) */
+.field {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  height: 16px;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* WIDTHS ADJUSTED FOR A4 SAFE FIT */
+.w-name { width: 75mm; }
+.w-date { width: 40mm; }
+.w-doc  { width: 40mm; }
+.w-phone{ width: 60mm; } 
+.w-address { width: 100%; }
+
+/* SECTION TITLE */
+.section-title {
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* SIGNATURE */
+.signature {
+  margin-top: 40px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  padding-top: 50px;
+  page-break-inside: avoid;
+}
+
+.signature-img {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+
+  width: 280px !important;
+  height: auto;
+  max-width: 300px;
+  max-height: 80px;
+}
+
+.signature::before {
+  content: "";
+  display: block;
+  border-top: 1px solid #000;
+}
+
+/* PRINT SAFETY */
+@media print {
+  body {
+    width: auto;
+    margin: 0;
+  }
+}
+
+.no-justify {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.center-insert {
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.center-insert .field {
+  margin: 0 3px;
+}
+
+.anamnese-table {
+    width: 100%;
+    height: 240px; /* fixed total table height */
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+.anamnese-table th {
+    border: 1px solid #000;
+    padding: 3px;
+    vertical-align: middle;
+
+    background: #f0f0f0;
+
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+
+    height: 42px;
+    max-height: 42px;
+
+    overflow: hidden;
+
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    line-height: 1.1;
+}
+.anamnese-table td {
+    border: 1px solid #000;
+    padding: 3px;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: middle;
+        /* Prevent overflow */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+
+/* 1st column */
+.anamnese-table th:first-child {
+    width: 30%;
+}
+
+.anamnese-table td:first-child {
+    width: 30%;
+    text-align: left;
+}
+
+/* 2nd and 3rd columns (checkmarks) */
+.anamnese-table th:nth-child(2),
+.anamnese-table td:nth-child(2),
+.anamnese-table th:nth-child(3),
+.anamnese-table td:nth-child(3) {
+    width: 30px;
+    text-align: center;
+}
+
+
+/* header only */
+.anamnese-table th:nth-child(2),
+.anamnese-table th:nth-child(3) {
+    font-size: 10px;
+}
+
+/* 4th column */
+.anamnese-table td:last-child {
+    text-align: left;
+    font-size: 8px;
+}
+</style>
+
+</head>
+
+
+
+<body>
+
+<div class="header">
+  <img src="file:///home/re/Documents/pi/pi/media/header.png">
+</div>
+
+<h3>TERMO DE CONSENTIMENTO TOXINA BOTULÍNICA</h3>
+
+<p><b>IDENTIFICAÇÃO DO (A) PACIENTE:</b></p>
+
+<p>
+Nome:
+<span class="field w-name">{{nome}}</span>
+
+Data de nascimento:
+<span class="field w-date">{{data_nasc}}</span>
+</p>
+
+<p class="no-justify">
+RG:
+<span class="field w-doc">{{rg}}</span>
+
+CPF:
+<span class="field w-doc">{{cpf}}</span>
+
+Telefone:
+<span class="field w-phone">{{tel}}</span>
+</p>
+
+<p>
+Endereço:
+<span class="field w-address">{{endereco}}</span>
+</p>
+
+<div class="section-title">
+PROCEDIMENTOS, COMPLICAÇÕES E RISCOS – APLICAÇÃO DE TOXINA BOTULÍNICA
+</div>
+
+<p><b>1. INFORMAÇÕES GENÉRICAS</b><br>
+A Toxina Botulínica “A” basicamente inibe a liberação exocitótica da acetilcolina nos terminais motores levando a uma diminuição da contração muscular.
+</p>
+
+<p><b>2. INDICAÇÕES</b><br>
+Esse procedimento é indicado para prevenção de rugas estáticas.<br>
+Esse procedimento não é indicado em caso de reação alérgica já conhecida a qualquer um dos componentes.
+</p>
+
+<p><b>3. MODO DE AÇÃO</b><br>
+A Toxina Botulínica causa uma semiparalisação da musculatura e, portanto, NÃO preenche rugas. Esta semiparalisação é temporária e pode durar em média cinco meses. O efeito esperado demora entre 3 e 7 dias para acontecer. É recomendável um intervalo de 6 meses entre as aplicações para que o paciente não crie resistência à toxina e possa continuar usufruindo dos resultados.
+</p>
+
+<p><b>4. MODO DE APLICAÇÃO E APARÊNCIA</b><br>
+A toxina Botulínica vem em frasco estéril em formato de pó liofilizado, devendo ser diluída com soro fisiológico estéril e conservada em temperatura baixa. Sua aplicação é realizada através de agulha com pequenas punturas em vários pontos da face, de acordo com a análise do profissional e queixa do cliente.
+</p>
+
+<p><b>5. CUIDADOS NECESSÁRIOS</b><br>
+Evite tocar ou massagear a região tratada nas 4 horas seguintes do procedimento, inclusive não abaixe a cabeça ou se deite durante esse período, evitando que a toxina migre para áreas indesejadas. Depois desse período a área poderá ser lavada suavemente com água e sabonete próprio para o rosto.
+</p>
+
+<p><b>6. EFEITOS COLATERAIS E RISCOS</b><br>
+Logo após a aplicação pode ocorrer vermelhidão, edema, sensibilidade e coceira. Fazer compressa fria na região afetada. NÃO use gelo diretamente no local. Trata-se de reação normal e pode durar de 1 a 3 dias. Caso persista, comunicar o profissional.
+</p>
+
+<p><b>7. DURAÇÃO DO EFEITO</b><br>
+De uma maneira geral a durabilidade varia de organismo para organismo, podendo ser de 4 a 6 meses. O pagamento contempla uma aplicação e eventual reaplicação para retoques em até 15 dias.
+</p>
+
+<p><b>8. RETORNO</b><br>
+Para manter a correção será necessário repetir o procedimento com o tempo. É responsabilidade do paciente o agendamento de retornos.
+</p>
+
+<p><b>9. RESULTADO</b><br>
+Fatores individuais influenciam no resultado. Pequena parte da população pode apresentar resistência à toxina botulínica. Cada organismo reage de forma única. Este termo não esgota todos os riscos possíveis.
+</p>
+
+<br>
+
+<p><b>DECLARO QUE LI E ENTENDI</b> as informações acima e tive oportunidade de esclarecer dúvidas antes do procedimento.</p>
+
+<p>Comprometo-me a seguir todos os cuidados prescritos. Estou ciente de que o resultado depende também de mim. Reconheço que podem existir riscos não listados neste termo.</p>
+
+<p>Autorizo a realização do procedimento e isento o profissional de complicações fora de seu controle.</p>
+
+<p>Certifico que li, entendi e recebi este termo com antecedência adequada.</p>
+
+<p>Declaro que todas as informações fornecidas são verdadeiras.</p>
+
+<p><b>Assim, firmo a presente declaração e autorização.</b></p>
+
+<p style="margin-top:20px;">
+(Local)
+<span class="center-insert">
+  <span class="field w-doc">São Paulo-SP</span>,
+  <span class="field w-date">{{dia}}</span> de
+  <span class="field w-date">{{mes}}</span> de {{ano}}.
+</span>
+</p>
+
+<table class="anamnese-table">
+
+  <thead>
+    <tr>
+        <th>Condição</th>
+        <th>Sim</th>
+        <th>Não</th>
+        <th>Observações</th>
+    </tr>
+  </thead>
+
+  {% for row in fields %}
+
+  <tr>
+      <td>{{ row.label }}</td>
+
+      <td>
+          {% if row.bool %}✔{% endif %}
+      </td>
+
+      <td>
+          {% if not row.bool %}✔{% endif %}
+      </td>
+
+      <td>
+          {{ row.text }}
+      </td>
+  </tr>
+
+  {% endfor %}
+
+  <tr>
+    <td colspan="4" style="font-weight:bold; text-align:center; font-size: 11px ; background:#f0f0f0; border-bottom: none">
+        Informações adicionais
+    </td>
+  </tr>
+
+  <tr>
+      <td colspan="4" style="text-align:left; border-top: none; height: 60px;">
+          {{ infoadd }}
+      </td>
+  </tr>
+
+</table>
+
+
+
+<div class="signature">
+  <img src="file:///{{path_ass}}" class="signature-img">
+  <div>Assinatura</div>
+</div>
+
+<div class="signature">
+Claudinéia Vieira<br>
+Biomédica Esteta<br>
+CRBM 9002
+</div>
+
+</body>
+</html>

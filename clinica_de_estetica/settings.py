@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "pag_web_clinicas.apps.PagWebClinicasConfig",
+    'jsignature', #bloco de assinatura
 ]
 
 MIDDLEWARE = [
