@@ -23,7 +23,7 @@ def contato(request):
 
 #####ficha de anamnese######
 def form_anam(request):
-    personal_fields = ['nome', 'data_nasc', 'rg', 'cpf', 'tel', 'endereco']
+    personal_fields = ['nome', 'data_nasc', 'rg', 'cpf', 'tel', 'logradouro', 'bairro', 'cidade', 'uf', 'número']
 
     if request.method == "POST":
         form = CreateFormAnam(request.POST)
@@ -31,6 +31,7 @@ def form_anam(request):
         if form.is_valid():
             print("IS VALID:", form.is_valid())
             print("ERRORS:", form.errors)
+            print(form.cleaned_data['endereco'],"FORMULARIO")
             return gerar_pdf(request, form, form.cleaned_data)
         else:
             print(form.errors)  # DEBUG
@@ -45,6 +46,8 @@ def form_anam(request):
         "personal_fields": personal_fields,
         "fields": fields
     }
+
+    
 
     return render(request, "pag_web_clinicas/form_anam.html", context)
 

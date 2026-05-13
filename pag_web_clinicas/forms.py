@@ -29,6 +29,9 @@ def formatar_nome(nome: str) -> str:
 #formulário
 class CreateFormAnam(forms.ModelForm):
 
+    #esconde endereço completo
+    endereco = forms.CharField(required=False)
+
     #widgets data_nascimento e assinatura
     data_nasc = forms.DateField(label="Data de Nascimento",
                             input_formats=['%d/%m/%Y'],
@@ -44,6 +47,7 @@ class CreateFormAnam(forms.ModelForm):
     class Meta:
         model = Cadastro
         fields = '__all__'
+        exclude = ["endereco"]
 
         labels = {
             'nome': 'Nome Completo',
@@ -245,3 +249,68 @@ class CreateFormAnam(forms.ModelForm):
             return f'({tel[:2]}) {tel[2:7]}-{tel[7:]}'
 
         return f'({tel[:2]}) {tel[2:6]}-{tel[6:]}'
+    
+    def clean_rg(self):
+        value = self.cleaned_data["rg"]
+
+        if not isinstance(value, (str, int)):
+            raise forms.ValidationError("RG deve ser texto ou número")
+    
+        v = str(value).strip()
+        rg_limpo = re.sub(r"[.\-\s]", "", v)
+
+        if not (rg_limpo.isdigit() or (rg_limpo[:-1].isdigit() and rg_limpo[-1].upper() == "X")):
+            raise forms.ValidationError("RG deve conter apenas números, pontos ou hífens")
+        
+        if len(rg_limpo) < 7 or len(rg_limpo) > 9:
+            raise forms.ValidationError("RG deve ter entre 7 e 9 dígitos")
+        
+        # Validação: todos os dígitos iguais é inválido
+        if len(set(rg_limpo)) == 1: raise ValueError("RG inválido: todos os dígitos são iguais")
+
+        if len(rg_limpo) == 7:
+            return f"{rg_limpo[:2]}.{rg_limpo[2:5]}.{rg_limpo[5:]}"
+        elif len(rg_limpo) == 8:
+            return f"{rg_limpo[:3]}.{rg_limpo[3:6]}.{rg_limpo[6:]}"
+        else:  # 9 digits
+            return f"{rg_limpo[:2]}.{rg_limpo[2:5]}.{rg_limpo[5:8]}-{rg_limpo[8]}"
+        
+    def clean_cep(self):
+        cep = self.cleaned_data["cep"]
+        cep = re.sub(r"\D", "", str(cep))
+
+        if len(cep) != 8:
+            raise forms.ValidationError("CEP deve conter 8 dígitos")
+
+        return cep
+
+    def clean(self):
+        cleaned = super().clean()
+
+        partes = []
+
+        if cleaned.get("logradouro"):
+            partes.append(cleaned["logradouro"])
+
+        if cleaned.get("numero"):
+            partes.append(cleaned["numero"])
+
+        if cleaned.get("bairro"):
+            partes.append(cleaned["bairro"])
+
+        if cleaned.get("cidade"):
+            partes.append(cleaned["cidade"])
+
+        if cleaned.get("uf"):
+            partes.append(cleaned["uf"])
+
+        if cleaned.get("cep"):
+            partes.append(f"CEP: {cleaned['cep']}")
+
+        partes = [p.strip().title() for p in partes if p]
+
+        cleaned["endereco"] = (", ".join(partes[:-1])) + ' - ' + partes[-1].upper()
+
+        print("CLEANED DATA BEFORE:", cleaned)
+
+        return cleaned

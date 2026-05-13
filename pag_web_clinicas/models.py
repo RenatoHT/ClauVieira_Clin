@@ -288,7 +288,7 @@ class Cadastro(models.Model):
     data_nasc = models.DateField()
     rg = models.CharField(max_length=12)
     cpf = models.CharField(max_length=14)
-    endereco = models.CharField(max_length=300)
+    endereco = models.CharField(max_length=400)
     
 
     alergia_bool = models.BooleanField(default=False)
@@ -355,6 +355,29 @@ class Cadastro(models.Model):
 
     assinatura = models.ImageField(null=True, blank=True)
 
+    #cep = models.CharField(max_length=8)
+    logradouro = models.CharField(max_length=255, blank=True, null=True)
+    bairro = models.CharField(max_length=255, blank=True, null=True)
+    cidade = models.CharField(max_length=255, blank=True, null=True)
+    uf = models.CharField(max_length=2, blank=True, null=True)
+    numero = models.CharField(max_length=20, blank=True, null=True)  
+
+    def __str__(self):
+        partes = []
+
+        if self.logradouro:
+            partes.append(self.logradouro)
+        if self.numero:
+            partes.append(str(self.numero))
+        if self.bairro:
+            partes.append(self.bairro)
+        if self.cidade:
+            partes.append(self.cidade)
+        if self.uf:
+            partes.append(self.uf)
+        if not partes:
+            return f"CEP: {self.cep}"
+        return ', '.join(partes)
 
     
     def clean(self):
@@ -370,3 +393,5 @@ class Cadastro(models.Model):
                     raise ValidationError({
                         f"{base}_str": "Como checkbox está marcado este campo é obrigatório."
                     })
+                
+    

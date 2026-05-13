@@ -2,6 +2,7 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 from django.utils import timezone
 from django.utils.formats import date_format
+from pathlib import Path
 
 class PDFgen:
     template_name = "pag_web_clinicas/template_pdf.html"
@@ -11,16 +12,29 @@ class PDFgen:
 
         self.data = data
 
+        #header, footer
+        header_path = (Path(__file__).resolve().parent.parent 
+                        / 'media'
+                        / 'header.png')
+        self.data['header_img'] =  header_path.as_uri()
+
+        footer_path = (Path(__file__).resolve().parent.parent 
+                        / 'media'
+                        / 'footer.png')
+        self.data['footer_img'] =  footer_path.as_uri()
+
+        #tabela anamnese
         self.data["fields"] = self.build_pdf_table()
         self.data["path_ass"] = self.assinatura_img(data["assinatura"])
 
+        #dia, mês, ano
         today = timezone.now()    
 
         self.data['dia'] = date_format(today, 'd')
         self.data['mes'] = date_format(today, 'F')
         self.data['ano'] = date_format(today, 'Y')
 
-        print(self.data['path_ass'])
+
     def render_html(self) -> str:
         return render_to_string(self.template_name, self.data)
 
@@ -33,7 +47,6 @@ class PDFgen:
             f.write(pdf_bytes)
 
     def assinatura_img(self, c_form):
-        from pathlib import Path
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt

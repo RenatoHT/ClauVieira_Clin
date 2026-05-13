@@ -7,35 +7,50 @@
 <style>
 @page {
     size: A4;
-    margin: 40mm 20mm 20mm 20mm;
-    
-    @top-center {
-        content: element(header);
-    }
+    margin: 25mm 20mm 30mm 20mm;
 }
 
 
 .header {
-    position: running(header);
-    height: 30mm;
-    width: 100%;
+    position: fixed;
+    top: -15mm;
+    left: 0;
+    right: 0;
 }
 
 .header img {
     width: 100%;
-    height: 30mm;
-    object-fit: cover;
+    height: 15mm;
     display: block;
+    border: 1px solid #d3d3d3;
+}
+
+.footer {
+    position: fixed;
+    bottom: -30mm;
+    left: 0;
+    right: 0;
+    height: 25mm;
+    text-align: center;
+}
+
+.footer img {
+    height: 20mm;
+    display: inline-block;
+    border: 1px solid #d3d3d3; 
 }
 
 * {
   box-sizing: border-box;
 }
 
+.title {
+  text-align: center;
+  font-weight: bold;
+}
 
 body {
   margin: 0 auto;
-  padding-top: 20mm;
   font-family: DejaVu Sans, Arial, sans-serif;
   font-size: 12px;
   line-height: 1.5;
@@ -199,6 +214,10 @@ h3 {
     text-align: left;
     font-size: 8px;
 }
+
+.page-break {
+  page-break-after: always;
+}
 </style>
 
 </head>
@@ -208,12 +227,12 @@ h3 {
 <body>
 
 <div class="header">
-  <img src="file:///home/re/Documents/pi/pi/media/header.png">
+  <img src="{{header_img}}">
 </div>
 
 <h3>TERMO DE CONSENTIMENTO TOXINA BOTULÍNICA</h3>
 
-<p><b>IDENTIFICAÇÃO DO (A) PACIENTE:</b></p>
+<p class="title">IDENTIFICAÇÃO DO(A) PACIENTE  SEU REPRESENTANTE LEGAL:</p>
 
 <p>
 Nome:
@@ -239,71 +258,9 @@ Endereço:
 <span class="field w-address">{{endereco}}</span>
 </p>
 
-<div class="section-title">
-PROCEDIMENTOS, COMPLICAÇÕES E RISCOS – APLICAÇÃO DE TOXINA BOTULÍNICA
-</div>
+<p class="title" style="margin-top: 50px;">FICHA DE ANAMNESE</p>
 
-<p><b>1. INFORMAÇÕES GENÉRICAS</b><br>
-A Toxina Botulínica “A” basicamente inibe a liberação exocitótica da acetilcolina nos terminais motores levando a uma diminuição da contração muscular.
-</p>
-
-<p><b>2. INDICAÇÕES</b><br>
-Esse procedimento é indicado para prevenção de rugas estáticas.<br>
-Esse procedimento não é indicado em caso de reação alérgica já conhecida a qualquer um dos componentes.
-</p>
-
-<p><b>3. MODO DE AÇÃO</b><br>
-A Toxina Botulínica causa uma semiparalisação da musculatura e, portanto, NÃO preenche rugas. Esta semiparalisação é temporária e pode durar em média cinco meses. O efeito esperado demora entre 3 e 7 dias para acontecer. É recomendável um intervalo de 6 meses entre as aplicações para que o paciente não crie resistência à toxina e possa continuar usufruindo dos resultados.
-</p>
-
-<p><b>4. MODO DE APLICAÇÃO E APARÊNCIA</b><br>
-A toxina Botulínica vem em frasco estéril em formato de pó liofilizado, devendo ser diluída com soro fisiológico estéril e conservada em temperatura baixa. Sua aplicação é realizada através de agulha com pequenas punturas em vários pontos da face, de acordo com a análise do profissional e queixa do cliente.
-</p>
-
-<p><b>5. CUIDADOS NECESSÁRIOS</b><br>
-Evite tocar ou massagear a região tratada nas 4 horas seguintes do procedimento, inclusive não abaixe a cabeça ou se deite durante esse período, evitando que a toxina migre para áreas indesejadas. Depois desse período a área poderá ser lavada suavemente com água e sabonete próprio para o rosto.
-</p>
-
-<p><b>6. EFEITOS COLATERAIS E RISCOS</b><br>
-Logo após a aplicação pode ocorrer vermelhidão, edema, sensibilidade e coceira. Fazer compressa fria na região afetada. NÃO use gelo diretamente no local. Trata-se de reação normal e pode durar de 1 a 3 dias. Caso persista, comunicar o profissional.
-</p>
-
-<p><b>7. DURAÇÃO DO EFEITO</b><br>
-De uma maneira geral a durabilidade varia de organismo para organismo, podendo ser de 4 a 6 meses. O pagamento contempla uma aplicação e eventual reaplicação para retoques em até 15 dias.
-</p>
-
-<p><b>8. RETORNO</b><br>
-Para manter a correção será necessário repetir o procedimento com o tempo. É responsabilidade do paciente o agendamento de retornos.
-</p>
-
-<p><b>9. RESULTADO</b><br>
-Fatores individuais influenciam no resultado. Pequena parte da população pode apresentar resistência à toxina botulínica. Cada organismo reage de forma única. Este termo não esgota todos os riscos possíveis.
-</p>
-
-<br>
-
-<p><b>DECLARO QUE LI E ENTENDI</b> as informações acima e tive oportunidade de esclarecer dúvidas antes do procedimento.</p>
-
-<p>Comprometo-me a seguir todos os cuidados prescritos. Estou ciente de que o resultado depende também de mim. Reconheço que podem existir riscos não listados neste termo.</p>
-
-<p>Autorizo a realização do procedimento e isento o profissional de complicações fora de seu controle.</p>
-
-<p>Certifico que li, entendi e recebi este termo com antecedência adequada.</p>
-
-<p>Declaro que todas as informações fornecidas são verdadeiras.</p>
-
-<p><b>Assim, firmo a presente declaração e autorização.</b></p>
-
-<p style="margin-top:20px;">
-(Local)
-<span class="center-insert">
-  <span class="field w-doc">São Paulo-SP</span>,
-  <span class="field w-date">{{dia}}</span> de
-  <span class="field w-date">{{mes}}</span> de {{ano}}.
-</span>
-</p>
-
-<table class="anamnese-table">
+<table class="anamnese-table page-break">
 
   <thead>
     <tr>
@@ -349,6 +306,69 @@ Fatores individuais influenciam no resultado. Pequena parte da população pode 
 </table>
 
 
+<div class="section-title">
+PROCEDIMENTOS, COMPLICAÇÕES E RISCOS – APLICAÇÃO DE TOXINA BOTULÍNICA
+</div>
+
+<p><b>1. INFORMAÇÕES GENÉRICAS</b><br>
+A Toxina Botulínica “A” basicamente inibe a liberação exocitótica da acetilcolina nos terminais motores levando a uma diminuição da contração muscular.
+</p>
+
+<p><b>2. INDICAÇÕES</b><br>
+Esse procedimento é indicado para prevenção de rugas estáticas.<br>
+Esse procedimento não é indicado em caso de reação alérgica já conhecida a qualquer um dos componentes.
+</p>
+
+<p><b>3. MODO DE AÇÃO</b><br>
+A Toxina Botulínica causa uma semiparalisação da musculatura e, portanto, NÃO preenche rugas. Esta semiparalisação é temporária e pode durar em média cinco meses. O efeito esperado demora entre 3 e 7 dias para acontecer. É recomendável um intervalo de 6 meses entre as aplicações para que o paciente não crie resistência à toxina e possa continuar usufruindo dos resultados.
+</p>
+
+<p><b>4. MODO DE APLICAÇÃO E APARÊNCIA</b><br>
+A toxina Botulínica vem em frasco estéril em formato de pó liofilizado, devendo ser diluída com soro fisiológico estéril e conservada em temperatura baixa. Sua aplicação é realizada através de agulha com pequenas punturas em vários pontos da face, de acordo com a análise do profissional e queixa do cliente.
+</p>
+
+<p><b>5. CUIDADOS NECESSÁRIOS</b><br>
+<b>Evite tocar ou massagear a região tratada nas 4 horas seguintes do procedimento, inclusive não abaixe a cabeça ou se deite durante esse período, evitando que a toxina migre para áreas indesejadas. Depois desse período a área poderá ser lavada suavemente com água e sabonete próprio para o rosto.</b>
+</p>
+
+<p><b>6. EFEITOS COLATERAIS E RISCOS</b><br>
+Logo após a aplicação pode ocorrer vermelhidão, edema, sensibilidade, coceira na região afetada. Fazer compressa fria na região afetada. NÃO use gelo diretamente no local afetado. Trata-se de uma reação normal e esse incomodo pode durar de 1 a 3 dias. Após esse período comunicar ao profissional, caso incomodo persistir. 
+</p>
+
+<p><b>7. DURAÇÃO DO EFEITO</b><br>
+De uma maneira geral a durabilidade do preenchimento varia de organismo para organismo, podendo ser de 4 meses a 6 meses. O pagamento contempla somente uma aplicação e uma eventual reaplicação, no prazo de 15 dias caso esta seja feita para retoques.
+</p>
+
+<p><b>8. RETORNO</b><br>
+Para manter a correção na região, será necessário repetir o procedimento com o decorrer do tempo de responsabilidade do paciente o agendamento e a ida ao consultório para possíveis correções, estando sujeito à agenda e local de atendimento do profissional. 
+</p>
+
+<p><b>9. RESULTADO</b><br>
+Alguns fatores irão influenciar no resultado do procedimento por se tratar de um agente biológico. Uma pequena parte da população possui resistência à toxina botulínica e, neste caso, não há 100% da resposta esperada. O paciente deverá ter ciência de que cada resultado é único, cada organismo reage de uma maneira. As informações descritas neste termo não esgotam todas as possibilidades de riscos e complicações que podem ocorrer com a realização desse procedimento, sendo enumeradas apenas algumas.
+</p>
+
+<p class="page-break"></p>
+
+
+<p><b>DECLARO QUE LI E ENTENDI</b> as informações acima, e que antes de aceitar o procedimento, tive a oportunidade suficiente para discutir e questionar sobre o mesmo, esclarecendo minhas dúvidas.</p>
+
+<p>Comprometo-me a seguir, rigorosamente, todos os cuidados prescritos. Tenho consciência de que o bom resultado final também depende de mim. Declaro ciência de que a lista de riscos e complicações deste formulário pode não incluir todos os riscos conhecidos ou possíveis de acontecer neste procedimento, mas é a lista de riscos mais comuns a e severos. Estou ciente ser de minha responsabilidade a leitura integral deste termo, preparado com esmero e que me foi entregue em tempo hábil para que pudesse lê-lo e, caso ainda restasse alguma dúvida, poder dirimi-la com o profissional.</p>
+
+<p>Autorizo também que administre tal tratamento em mim, concordando inclusive e não responsabilizar, ou fazer quaisquer exigências ou processá-lo por danos ou injúrias ou complicações que porventura ocorram fora de seu controle, os quais possam alterar os resultados previstos.</p>
+
+<p>Certifico que este formulário me foi explicado e que li e que entendi o seu conteúdo. Forneci, sem nada omitir, para o preenchimento da ficha, todas as informações solicitadas.</p>
+
+<p>Assim sendo, firmo a presente declaração e autorização.</p>
+
+
+<p style="margin-top:20px;">
+<span class="center-insert">
+  <span class="field w-doc">São Paulo-SP</span>,
+  <span class="field w-date">{{dia}}</span> de
+  <span class="field w-date">{{mes}}</span> de {{ano}}.
+</span>
+</p>
+
 
 <div class="signature">
   <img src="file:///{{path_ass}}" class="signature-img">
@@ -359,6 +379,11 @@ Fatores individuais influenciam no resultado. Pequena parte da população pode 
 Claudinéia Vieira<br>
 Biomédica Esteta<br>
 CRBM 9002
+{{testestes}}
+</div>
+
+<div class="footer">
+    <img src="{{ footer_img }}">
 </div>
 
 </body>
