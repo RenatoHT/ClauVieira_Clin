@@ -41,7 +41,20 @@ class CreateFormAnam(forms.ModelForm):
                                     }
                                 )
                             )
-    assinatura = JSignatureField(label="Assinatura",widget=JSignatureWidget(jsignature_attrs={'color': "#000000", 'height': '200px', 'width': '700px', "ResetButton":True}))
+    infoadd = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'id': 'id_infoadd',
+            'rows': 6,
+        })
+    )
+
+    assinatura = JSignatureField(label="Assinatura",
+                                 widget=JSignatureWidget(
+                                                        jsignature_attrs={
+                                                                        'color': "#000000", 
+                                                                        'height': '200px', 
+                                                                        'width': '100%', 
+                                                                        "ResetButton":True}))
     
 
     class Meta:
@@ -56,6 +69,8 @@ class CreateFormAnam(forms.ModelForm):
             'tel': "Telefone",
             'assinatura': 'Assinatura',
             'endereco': 'Endereço',
+            'uf': 'UF',
+            'numero': 'Número',
             'alergia_bool': 'Alergias',
             'alergia_str':'',
             'hepatite_bool': 'Hepatite',

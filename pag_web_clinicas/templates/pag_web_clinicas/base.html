@@ -11,6 +11,7 @@
 
     {# necessário para o carregamento do espaço de assinatura #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      {% block extra_css %}{% endblock %}
 
 </head>
 
@@ -30,6 +31,10 @@
 
 {% block content %}
 {% endblock %}
+
+
+{% block extra_js %}{% endblock %}
+
 
 <footer class="footer">
     <p>© 2026 Claudinéia – Biomédica Esteta</p>

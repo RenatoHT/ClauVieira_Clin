@@ -2,27 +2,256 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+{% block extra_css %}
+<style>
+.page-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.section-title {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #444;
+    border-left: 4px solid #4f46e5;
+    padding-left: 10px;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.pair {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.left {
+    flex: 0 0 200px;  /* fixed width */
+}
+
+.right {
+    flex: 1;
+}
+
+.right input,
+.right textarea,
+.right select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input, select, textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.submit-btn {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 12px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: #4338ca;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+.terms-container {
+    margin-top: 30px;
+}
+
+.terms-box {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.terms-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.terms-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+#id_infoadd {
+    width: 100%;
+    height: 140px;    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+    resize: none;
+}
+.sub-title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #444;
+    border-left: 4px solid #4f46e5;
+    padding-left: 10px;
+}
+
+.personal-grid, .address-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 15px 20px;
+}
+
+.personal-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.personal-item input,
+.personal-item select,
+.personal-item textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.assinatura-field {
+    margin-top: 30px;
+}
+
+.assinatura-field .jSignature,
+.assinatura-field .jSignature div,
+.assinatura-field .jSignature canvas {
+    border-radius: 8px !important;
+}
+
+.assinatura-field .jSignature {
+    border: 1px solid #ddd !important;
+    background: #fff;
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.assinatura-field .jSignature canvas {
+    border-radius: 8px;
+    border: none !important;
+}
+
+</style>
+{% endblock %}
+
 
 {% block content %}
-<div class = "titulo" >Cadastro</div>
+
+<div class="page-container">
+<div class="form-card">
+<h2 class="sub-title">Cadastro</h2>
 
 
-<form method="post" action="">
+<form method="post">
     {% csrf_token %}
 
     <h3>Dados Pessoais</h3>
-    
-    {% for field in form %}
-        {% if field.name in personal_fields %}
-            <p>{{ field.label }}<br>{{ field }}</p>
-            {% for error in field.errors %}
-                <span class="error">{{ error }}</span>
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+
+    <div class="personal-grid">
+        {% for field in form %}
+            {% if field.name in personal_fields and field.name not in address_fields %}
+                <div class="personal-item">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h4>Endereço</h4>
+
+    <div class="address-grid">
+        {% for field in form %}
+            {% if field.name in address_fields %}
+                <div class="personal-item">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
 
-    <h3>Anamnese</h3>
+    <h3 class="sub-title">Anamnese</h3>
 
     {% for bool_field, str_field in fields %}
 
@@ -55,8 +284,14 @@
 
     {{form.infoadd.label}}{{form.infoadd}}
 
-{% block extra_javascript %}{% endblock %}
+
 <div class="field assinatura-field">
+    <div class="label">
+        <label for="{{ form.assinatura.id_for_label }}">
+            {{ form.assinatura.label }}
+        </label>
+    </div>
+
     {{ form.assinatura }}
     {{form.media}}
 
@@ -67,12 +302,10 @@
         </div>
     {% endfor %}
 
-    <div class="label">
-        <label for="{{ form.assinatura.id_for_label }}">
-            {{ form.assinatura.label }}
-        </label>
-    </div>
+
 </div>
+
+{% block extra_js %}
 
 <script>
 window.addEventListener("load", function () {
@@ -104,6 +337,58 @@ document.getElementById('id_data_nasc').addEventListener('input', function (e) {
     e.target.value = value;
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const termsBox = document.getElementById('termsBox');
+    const checkbox = document.getElementById('termsCheckbox');
+
+    termsBox.addEventListener('scroll', function () {
+
+        const reachedBottom =
+            termsBox.scrollTop + termsBox.clientHeight >=
+            termsBox.scrollHeight - 5;
+
+        if (reachedBottom) {
+            checkbox.disabled = false;
+        }
+
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const pairs = document.querySelectorAll('.pair');
+
+    pairs.forEach(pair => {
+
+        const checkbox = pair.querySelector('input[type="checkbox"]');
+        const rightInput = pair.querySelector('.right input, .right textarea, .right select');
+
+        if (!checkbox || !rightInput) return;
+
+        // initial state
+        rightInput.disabled = !checkbox.checked;
+
+        checkbox.addEventListener('change', function () {
+            rightInput.disabled = !this.checked;
+
+            if (!this.checked) {
+                rightInput.value = ""; // optional reset
+            }
+        });
+
+    });
+
+});
+</script>
+
+{% endblock %}
+
 
 <!-- Terms and Conditions Section -->
 <div class="terms-container">
@@ -279,57 +564,8 @@ document.getElementById('id_data_nasc').addEventListener('input', function (e) {
 
 </div>
 
-<style>
-.terms-container {
-    margin-top: 30px;
-}
 
-.terms-box {
-    height: 250px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
-    background: #f9f9f9;
-    margin-bottom: 15px;
-    line-height: 1.6;
-}
-
-.terms-check {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.terms-check input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const termsBox = document.getElementById('termsBox');
-    const checkbox = document.getElementById('termsCheckbox');
-
-    termsBox.addEventListener('scroll', function () {
-
-        const reachedBottom =
-            termsBox.scrollTop + termsBox.clientHeight >=
-            termsBox.scrollHeight - 5;
-
-        if (reachedBottom) {
-            checkbox.disabled = false;
-        }
-
-    });
-
-});
-</script>
-
-
-<button type="submit">Finalizar</button>
+<button type="submit" class="submit-btn">FINALIZAR</button>
 
 </form>
 {% endblock %}

@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+from django.http import HttpResponseForbidden
 from .services import PDFgen
 from .services import build_pairs
 from pathlib import Path
@@ -22,34 +23,58 @@ def contato(request):
 
 
 #####ficha de anamnese######
+SENHA_FORM = "teste"
+
 def form_anam(request):
-    personal_fields = ['nome', 'data_nasc', 'rg', 'cpf', 'tel', 'logradouro', 'bairro', 'cidade', 'uf', 'número']
+    print("FORM ANAM VIEW CALLED")
+    # already authenticated for this session
+    
+    if request.session.get("form_anam_ok"):
 
-    if request.method == "POST":
-        form = CreateFormAnam(request.POST)
+        personal_fields = ['nome', 'data_nasc', 'rg', 'cpf', 'tel']
+                           
+        address_fields = ['logradouro', 'numero',
+                        'bairro','cidade', 'uf']
 
-        if form.is_valid():
-            print("IS VALID:", form.is_valid())
-            print("ERRORS:", form.errors)
-            print(form.cleaned_data['endereco'],"FORMULARIO")
-            return gerar_pdf(request, form, form.cleaned_data)
+        if request.method == "POST":
+            form = CreateFormAnam(request.POST)
+
+            if form.is_valid():
+                print("IS VALID:", form.is_valid())
+                print("ERRORS:", form.errors)
+                print(form.cleaned_data['endereco'],"FORMULARIO")
+                return gerar_pdf(request, form, form.cleaned_data)
+            else:
+                print(form.errors)  # DEBUG
         else:
-            print(form.errors)  # DEBUG
-    else:
-        form = CreateFormAnam()
+            form = CreateFormAnam()
 
-    fields = build_pairs(form)
+        fields = build_pairs(form)
 
+        
+        context = {
+            "form": form,
+            "personal_fields": personal_fields,
+            "address_fields": address_fields,
+            "fields": fields
+        }
+
+        
+
+        return render(request, "pag_web_clinicas/form_anam.html", context)
     
-    context = {
-        "form": form,
-        "personal_fields": personal_fields,
-        "fields": fields
-    }
 
-    
+    # password screen
+    if request.method == "POST":
+        senha = request.POST.get("senha")
 
-    return render(request, "pag_web_clinicas/form_anam.html", context)
+        if senha == SENHA_FORM:
+            request.session["form_anam_ok"] = True
+            return redirect(request.path)
+
+        return HttpResponseForbidden("Senha incorreta")
+
+    return render(request, "pag_web_clinicas/password_form.html")
 
 def gerar_pdf(request, form, data):
     BASE_DIR = Path(__file__).resolve().parent

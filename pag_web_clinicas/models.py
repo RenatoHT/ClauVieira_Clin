@@ -351,17 +351,17 @@ class Cadastro(models.Model):
     doenca_bool = models.BooleanField(default=False)
     doenca_str = models.CharField(max_length=200, blank=True)
 
-    infoadd = models.CharField(max_length=400, blank=True)
+    infoadd = models.CharField(max_length=800, blank=True)
 
     assinatura = models.ImageField(null=True, blank=True)
 
     #cep = models.CharField(max_length=8)
     logradouro = models.CharField(max_length=255, blank=True, null=True)
+    numero = models.CharField(max_length=20, blank=True, null=True)  
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.CharField(max_length=255, blank=True, null=True)
     uf = models.CharField(max_length=2, blank=True, null=True)
-    numero = models.CharField(max_length=20, blank=True, null=True)  
-
+    
     def __str__(self):
         partes = []
 
