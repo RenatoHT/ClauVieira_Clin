@@ -25,8 +25,11 @@ SECRET_KEY = "django-insecure-4%-31!6b3ns#&z9g0z*-pf_(o&fu#a&(4q(u#)o5yailtcs^eo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'webapp-pi-img-328492778367.southamerica-east1.run.app']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://webapp-pi-img-328492778367.southamerica-east1.run.app",
+]
 
 # Application definition
 
